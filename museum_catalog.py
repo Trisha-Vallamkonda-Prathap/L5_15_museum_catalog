@@ -21,7 +21,8 @@ conn.execute(
 def add_artifact(title, era, value, on_display=0):
     """Add a new artifact record to the catalog database."""
     conn.execute(
-        "INSERT INTO artifacts (title, era, value, on_display) VALUES (?, ?, ?, ?)",
+        "INSERT INTO artifacts "
+        "(title, era, value, on_display) VALUES (?, ?, ?, ?)",
         (title, era, value, on_display),
     )
     conn.commit()
@@ -42,7 +43,7 @@ def display_status(artifact_id, curator=None):
 
 
 def total_value(era):
-    """Calculate and return the total value of all artifacts for a given era."""
+    """Calculate and return total artifact value for a given era."""
     total = 0
     for (value,) in conn.execute(
         "SELECT value FROM artifacts WHERE era = ?", (era,)

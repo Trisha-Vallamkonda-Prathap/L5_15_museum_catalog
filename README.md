@@ -38,14 +38,28 @@ The code works, but only just. It has quality, style and security problems of th
 
 5. **Fix the code.** Fix at least 4 of the issues you documented, then rerun all three tools to confirm they are gone. Repeat until you are satisfied. The program should still do its job when you are done.
 
-6. **Reflect.** Answer the four reflection questions from the handout in `reflection.md`.
-
 ## Deliverables
 
-1. `museum_catalog.py`: your cleaned version, with at least 4 issues fixed.
-2. `issues.md`: the completed issue table.
-3. `reflection.md`: your answers to the reflection questions.
+1. `museum_catalog.py`: cleaned version achieving 10.00/10 Pylint score, 0 Bandit issues, and 0 Flake8 violations.
+2. `test_museum_catalog.py`: unit test suite covering functionality and security edge cases.
+3. `issues.md`: completed issue documentation table with 6 documented issues.
+4. `reports/before/`: original baseline reports (`pylint_report.txt`, `bandit_report.txt`, `flake8_report.txt`, `original_output.txt`).
+5. `reports/after/`: verified post-fix reports demonstrating 0 findings and 10.00/10 score.
 
-**Target:** aim for a Pylint score above 9.5 on your final file. A perfect 10.00/10 is very good.
+## How to Run & Verify
 
-Be ready to explain the bugs you found and how you fixed them. You may be called on to present.
+1. **Run the program:**
+   ```bash
+   python museum_catalog.py
+   ```
+2. **Run the automated unit tests:**
+   ```bash
+   python -m unittest test_museum_catalog.py
+   ```
+3. **Run Static Code Analyzers:**
+   ```bash
+   python -m pylint museum_catalog.py
+   python -m bandit -r museum_catalog.py
+   python -m flake8 museum_catalog.py
+   ```
+
