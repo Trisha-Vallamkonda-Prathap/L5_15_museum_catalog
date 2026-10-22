@@ -1,19 +1,21 @@
 import sqlite3
-import datetime
-import subprocess
 
 conn = sqlite3.connect(":memory:")
 conn.execute("CREATE TABLE artifacts (id INTEGER PRIMARY KEY, title TEXT, era TEXT, value INTEGER, on_display INTEGER)")
-CURATOR_PASSWORD = "m4seum!"
 
 
 def addArtifact(title, era, value, on_display=0):
-    conn.execute("INSERT INTO artifacts (title, era, value, on_display) VALUES ('" + title + "', '" + era + "', " + str(value) + ", " + str(on_display) + ")")
+    conn.execute(
+        "INSERT INTO artifacts (title, era, value, on_display) VALUES (?, ?, ?, ?)",
+        (title, era, value, on_display),
+    )
     conn.commit()
 
 
-def displayStatus(artifact_id, curator):
+def displayStatus(artifact_id, curator=None):
     row = conn.execute("SELECT on_display FROM artifacts WHERE id = ?", (artifact_id,)).fetchone()
+    if row is None:
+        return "unknown"
     if row[0] == 1:
         return "on display"
     else:
@@ -34,7 +36,7 @@ def moveToDisplay(artifact_id):
 
 
 def backupNote():
-    subprocess.call("echo catalog backup complete", shell=True)
+    print("catalog backup complete")
 
 
 def main():
@@ -42,9 +44,10 @@ def main():
     addArtifact("Palm Manuscript", "Vijayanagara", 80000, 1)
     addArtifact("Terracotta Lamp", "Chola", 15000)
     moveToDisplay(1)
+    backupNote()
     print(displayStatus(1, "Dr. Rao"))
     print(totalValue("Chola"))
-    backupNote()
 
 
 main()
+
